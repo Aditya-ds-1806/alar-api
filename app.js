@@ -10,7 +10,8 @@ const dictionary = yaml.load(fs.readFileSync('./alar.yml', { encoding: 'utf-8' }
 
 app.get('/', async (req, res) => {
     const query = req.query.q;
-    const { data } = await axios.get(`${baseURL}/${query}`);
+    const url = new URL(`${baseURL}/${query}`);
+    const { data } = await axios.get(url.toString());
     const words = data.result;
     const response = [];
     words.forEach(word => {
