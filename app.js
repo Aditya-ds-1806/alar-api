@@ -8,7 +8,24 @@ const { PORT, IP } = process.env;
 const baseURL = "https://alar.ink/tl/kn";
 const dictionary = yaml.load(fs.readFileSync('./alar.yml', { encoding: 'utf-8' }));
 
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
+    res.json({
+        "Hello World!": "This is an unofficial REST API for Alar.ink",
+        endPoints: [
+            {
+                searchByWord: "/search?q=",
+                examples: ["/search?q=alar", "/search?q=ಅಲರ್"],
+
+            }
+        ],
+        author: {
+            name: "Aditya D.S.",
+            emailID: "esd18i001@iiitdm.ac.in"
+        }
+    });
+});
+
+app.get('/search', async (req, res) => {
     const query = req.query.q;
     const url = new URL(`${baseURL}/${query}`);
     const { data } = await axios.get(url.toString());
