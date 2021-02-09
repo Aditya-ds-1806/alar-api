@@ -34,7 +34,12 @@ app.get('/search', async (req, res) => {
     words.forEach(word => {
         response.push(...dictionary.filter(item => item.entry === word));
     });
-    res.send(JSON.stringify(response));
+    res.json({
+        input: query,
+        results: response,
+        success: response.length !== 0,
+        at: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+    });
 });
 
 app.listen(PORT || 3000, IP, () => {
